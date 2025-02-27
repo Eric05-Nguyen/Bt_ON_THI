@@ -1,0 +1,99 @@
+package exercise2;
+
+import java.util.*;
+import java.text.*;
+
+abstract class Book implements IBook {
+
+    private String bookId;
+    private String publisher;
+    private Date entryDate;
+    private double utilPrice;
+    private double quantity;
+
+    public Book() {
+    }
+
+    public Book(String bookId, String publisher, Date entryDate, double utilPrice, double quantity) {
+        this.bookId = bookId;
+        this.publisher = publisher;
+        this.entryDate = entryDate;
+        this.utilPrice = utilPrice;
+        this.quantity = quantity;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setEntryDate(Date entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public void setUtilPrice(double utilPrice) {
+        this.utilPrice = utilPrice;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public Date getEntryDate() {
+        return entryDate;
+    }
+
+    public double getUtilPrice() {
+        return utilPrice;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public abstract void addBook();
+
+    public abstract void updateBook(String id);
+
+    public abstract void displayBook();
+
+    public abstract double caculateDiscount();
+
+    void inputBook() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Scanner nhap = new Scanner(System.in);
+        System.out.println("Nhập Book ID:");
+        bookId = nhap.nextLine();
+
+        System.out.println("Nhập nhà xuất bản:");
+        publisher = nhap.nextLine();
+
+        Date entryDate = null;
+        while (entryDate == null) {
+            try {
+                System.out.println("Nhập ngày (dd/MM/yyyy):");
+                entryDate = sdf.parse(nhap.nextLine());
+            } catch (Exception e) {
+                System.out.println("Không hợp lệ. Nhập lại!");
+            }
+        }
+        this.entryDate = entryDate;
+
+        System.out.println("Nhập giá:");
+        utilPrice = nhap.nextDouble();
+        System.out.println("Nhập số lượng:");
+        quantity = nhap.nextDouble();
+        System.out.println("Thêm thành công!");
+    }
+}
