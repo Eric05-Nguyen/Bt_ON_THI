@@ -1,0 +1,62 @@
+package exercise2;
+
+import java.util.*;
+import java.text.*;
+
+public class Processor {
+
+    public static void main(String[] args) {
+
+        Scanner nhap = new Scanner(System.in);
+        BookList bookList = new BookList();
+        int choice;
+        do {
+            System.out.println("0.Exit");
+            System.out.println("1.Add TextBook");
+            System.out.println("2.Add ReferenceBook");
+            System.out.println("3.Edit Book by id");
+            System.out.println("4.Find Book by id");
+            System.out.println("5.Xoa book by id");
+            System.out.println("6.In tat ca");
+            System.out.println("7.Tong gia tri tien sach ");
+            System.out.println("Lua chon:");
+            choice = nhap.nextInt();
+            nhap.nextLine();
+            switch (choice) {
+                case 1:
+                    TextBook textBook = new TextBook();
+                    bookList.addBook(textBook);
+                    break;
+                case 2:
+                    ReferenceBook rf = new ReferenceBook();
+                    bookList.addBook(rf);
+                    break;
+                case 3:
+                    System.out.println("Nhap id sach muon edit");
+                    String idToEdit = nhap.nextLine();
+                    bookList.updateBook(idToEdit);
+                    break;
+                case 4:
+                    System.out.println("Nhap id muon tim:");
+                    String idToFind = nhap.nextLine();
+                    bookList.findBookById(idToFind);
+                    Book tim = bookList.findBookById(idToFind);
+                    if (tim != null) {
+                        tim.displayBook();
+                    } else {
+                        System.out.println("KHong tim thay id:" + idToFind);
+                    }
+                    break;
+                case 5:
+                    System.out.println("Nhap id sach can xoa :");
+                    String idtoDelete = nhap.nextLine();
+                    bookList.deleteBookById(idtoDelete);
+                    break;
+                case 6:
+                  bookList.displayBooks();
+                  break;
+                case 7 :
+                    System.out.println("Tonng gia tien la:"+bookList.calculateTotalAmount());          }
+        } while (choice != 0);
+    }
+}
