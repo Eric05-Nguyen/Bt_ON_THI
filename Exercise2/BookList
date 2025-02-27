@@ -1,0 +1,70 @@
+package exercise2;
+
+import java.util.*;
+import java.text.*;
+
+public class BookList {
+
+    Scanner nhap = new Scanner(System.in);
+    ArrayList<Book> ds = new ArrayList<>();
+
+    public void addBook(Book book) {
+        ds.add(book);
+        book.addBook();
+    }
+
+    public void updateBook(String id) {
+        for (Book book : ds) {
+            if (book.getBookId().equals(id)) {
+                book.updateBook(id);
+                return;
+            }
+        }
+        System.out.println("Khong thay id :" + id);
+    }
+
+    public Book findBookById(String id) {
+        for (Book book : ds) {
+            if (book.getBookId().equals(id)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    public void deleteBookById(String idtoDelete) {
+        Book book = findBookById(idtoDelete);
+        if (book != null) {
+            ds.remove(book);
+            System.out.println("Đã xóa thành công");
+        } else {
+            System.out.println("Không tìm thấy sách");
+        }
+    }
+
+    public void displayBooks() {
+        if (ds.isEmpty()) {
+            System.out.println("Danh sách sách trống.");
+            return;
+        }
+
+        System.out.println("Danh sách sách hiện có:");
+        for (Book book : ds) {
+            book.displayBook();
+            System.out.println("------------------------");
+        }
+    }
+
+    public double calculateTotalAmount() {
+        double total = 0;
+        for (Book book : ds) {
+            if (book instanceof TextBook) {
+                total += ((TextBook) book).caculateTotal();
+            } else if (book instanceof ReferenceBook) {
+                total += ((ReferenceBook) book).caculateTotal();
+            }
+        }
+        return total;
+    }
+
+}
