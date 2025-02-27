@@ -1,0 +1,86 @@
+package exercise2;
+
+import java.util.*;
+import java.text.*;
+
+public class TextBook extends Book {
+
+    private String status;
+    Scanner nhap = new Scanner(System.in);
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+    public TextBook() {
+    }
+
+    public TextBook(String bookId, String publisher, Date entryDate, double utilPrice, double quantity, String status) {
+        super(bookId, publisher, entryDate, utilPrice, quantity);
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    @Override
+    public void addBook() {
+        inputBook();
+        System.out.println("Nhập trạng thái:");
+        status = nhap.nextLine();
+        System.out.println("Thêm thành công!");
+    }
+
+    @Override
+    public void updateBook(String id) {
+        if (getBookId().equals(id)) {
+            System.out.println("Nhập nhà xuất bản:");
+            String publisher = nhap.nextLine();
+
+            Date entryDate = null;
+            while (entryDate == null) {
+                try {
+                    System.out.println("Nhập ngày (dd/MM/yyyy):");
+                    entryDate = sdf.parse(nhap.nextLine());
+                } catch (Exception e) {
+                    System.out.println("Không hợp lệ. Nhập lại!");
+                }
+            }
+
+            System.out.println("Nhập giá:");
+            double utilPrice = nhap.nextDouble();
+            System.out.println("Nhập số lượng:");
+            double quantity = nhap.nextDouble();
+            System.out.println("Thêm thành công!");
+            System.out.print("Nhập trạng thái mới: ");
+            status = nhap.nextLine();
+            System.out.println("Cập nhật thành công!");
+        }
+    }
+
+    @Override
+    public void displayBook() {
+        System.out.println("----------------------------");
+        System.out.println("Book id:" + getBookId());
+        System.out.println("Publisher :" + getPublisher());
+        System.out.println("EntryDate:" + getEntryDate());
+        System.out.println("Util price :" + getUtilPrice());
+        System.out.println("Quantity:" + getQuantity());
+        System.out.println("Status:" + status);
+    }
+
+    @Override
+    public double caculateDiscount() {
+        if (status.equalsIgnoreCase("new")) {
+            return this.getQuantity() * this.getUtilPrice() * 0.1;
+        } else {
+            if (status.equalsIgnoreCase("old")) {
+                return this.getQuantity() * this.getUtilPrice() * 0.05;
+            }
+        }
+        return 0;
+    }
+
+    public double caculateTotal() {
+        return this.getQuantity() * this.getUtilPrice() - this.caculateDiscount();
+    }
+
+}
