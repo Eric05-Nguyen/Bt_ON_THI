@@ -1,0 +1,82 @@
+package exercise2;
+
+import java.util.*;
+import java.text.*;
+
+public class ReferenceBook extends Book {
+
+    private double tax;
+    Scanner nhap = new Scanner(System.in);
+    SimpleDateFormat  sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+    public ReferenceBook() {
+    }
+
+    public ReferenceBook(String bookId, String publisher, Date entryDate, double utilPrice, double quantity, double tax) {
+        super(bookId, publisher, entryDate, utilPrice, quantity);
+        this.tax = tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    @Override
+    public void addBook() {
+        super.inputBook();
+        System.out.println("Nhập thuế:");
+        tax = nhap.nextDouble();
+        System.out.println("Thêm thành công!");
+    }
+
+    @Override
+    public void updateBook(String id) {
+        if (this.getBookId().equals(id)) {
+            System.out.println("Nhập nhà xuất bản:");
+            String publisher = nhap.nextLine();
+
+            Date entryDate = null;
+            while (entryDate == null) {
+                try {
+                    System.out.println("Nhập ngày (dd/MM/yyyy):");
+                    entryDate = sdf.parse(nhap.nextLine());
+                } catch (Exception e) {
+                    System.out.println("Không hợp lệ. Nhập lại!");
+                }
+            }
+
+            System.out.println("Nhập giá:");
+             double utilPrice = nhap.nextDouble();
+            System.out.println("Nhập số lượng:");
+            double quantity = nhap.nextDouble();
+            System.out.println("Thêm thành công!");
+            System.out.println("Nhap thue mới :");
+            tax = nhap.nextDouble();
+            System.out.println("Cập nhật thành công!");
+        }
+    }
+
+    @Override
+    public void displayBook() {
+        System.out.println("----------------------------");
+        System.out.println("Book id:" + getBookId());
+        System.out.println("Publisher :" + getPublisher());
+        System.out.println("EntryDate:" + getEntryDate());
+        System.out.println("Util price :" + getUtilPrice());
+        System.out.println("Quantity:" + getQuantity());
+        System.out.println("Tax:" + tax);
+    }
+
+    @Override
+    public double caculateDiscount() {
+        return this.getUtilPrice() * this.getQuantity() * 0.05;
+    }
+
+    public double caculateTotal() {
+        return this.getQuantity() * this.getUtilPrice() + this.tax - this.caculateDiscount();
+    }
+}
